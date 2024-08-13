@@ -1,6 +1,3 @@
-/* Question: Write a C program to compute the time taken in applying quick sort algorithm on arrays of following
-sizes: 50 elements, 100 elements, 500 elements, 2000 elements, 5000 elements.*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -18,37 +15,30 @@ void print(int *arr, int n)
 }
 void swap(int *arr, int i, int j)
 {
-    int temp = *(arr + i);
-    *(arr + i) = *(arr + j);
-    *(arr + j) = temp;
+    *(arr + i) = *(arr + i) ^ *(arr + j);
+    *(arr + j) = *(arr + i) ^ *(arr + j);
+    *(arr + i) = *(arr + i) ^ *(arr + j);
+    return;
 }
-int partition(int *arr, int low, int high)
+void heapify(int *arr, int n)
 {
-    int pivot = *(arr + high);
-    int i = (low - 1);
-
-    for (int j = low; j <= high - 1; j++)
+    int i = 0, j = 0;
+    for (i = 0; i < n; i++)
     {
-        if (*(arr + j) < pivot)
+        j = i;
+        while (j > 0)
         {
-            i++;
-            swap(arr, i, j);
+            if (*(arr + j) > *(arr + (j / 2)))
+            {
+                swap(arr, j, j / 2);
+            }
+            else
+                break;
+            j /= 2;
         }
     }
-    swap(arr, i + 1, high);
-    return (i + 1);
+    return;
 }
-
-void quicksort(int *arr, int low, int high)
-{
-    if (low < high)
-    {
-        int pivot = partition(arr, low, high);
-        quicksort(arr, low, pivot - 1);
-        quicksort(arr, pivot + 1, high);
-    }
-}
-
 void program()
 {
     int n, i;
@@ -60,12 +50,12 @@ void program()
         *(arr + i) = rand() % 1000;
     }
     clock_t start = clock();
-    quicksort(arr, 0, n - 1);
+    heapify(arr, n);
     clock_t stop = clock();
     double time = (double)(stop - start) / CLOCKS_PER_SEC;
-    printf("Time taken for quick sort: %lf\n", time);
-    // printf("Sorted Array:\n");
-    // print(arr, n);
+    printf("Time taken for building a max heap: %lf\n", time);
+    printf("Heap:\n");
+    print(arr, n);
     free(arr);
 }
 int main()

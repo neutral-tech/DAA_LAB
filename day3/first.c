@@ -92,7 +92,7 @@ void program()
     double time = (double)(stop - start) / CLOCKS_PER_SEC;
     printf("Time taken for merge sort: %lf\n", time);
     printf("Sorted Array:\n");
-    print(arr, n);
+    // print(arr, n);
     free(arr);
 }
 int main()
