@@ -1,3 +1,5 @@
+/*1. Write a C program to compute the time taken to build a Max-heap from given arrays of following sizes: 
+50 elements, 100 elements, 500 elements, 2000 elements, 5000 elements.*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
